@@ -221,7 +221,8 @@
 		fallbackFadeSpeed : 300,
 		// callbacks
 		onBeforeChange : function( position ) { return false; },
-		onAfterChange : function( position ) { return false; }
+		onAfterChange : function( position ) { return false; },
+		onReady : function() { return false; }
 	};
 
 	$.Slicebox.prototype = {
@@ -274,6 +275,7 @@
 				self._setStyle();
 				self._initEvents();
 
+				self.options.onReady();
 				self.isReady = true;
 
 				if( self.options.autoplay ) {

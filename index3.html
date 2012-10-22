@@ -84,11 +84,11 @@
 					</li>
 				</ul>
 
-				<div class="shadow"></div>
+				<div id="shadow" class="shadow"></div>
 
-				<div class="nav-arrows">
-					<a href="#" id="navNext">Next</a>
-					<a href="#" id="navPrev">Previous</a>
+				<div id="nav-arrows" class="nav-arrows">
+					<a href="#">Next</a>
+					<a href="#">Previous</a>
 				</div>
 
 			</div><!-- /wrapper -->
@@ -103,7 +103,15 @@
 				
 				var Page = (function() {
 
-					var slicebox = $( '#sb-slider' ).slicebox( {
+					var $navArrows = $( '#nav-arrows' ).hide(),
+						$shadow = $( '#shadow' ).hide(),
+						slicebox = $( '#sb-slider' ).slicebox( {
+							onReady : function() {
+
+								$navArrows.show();
+								$shadow.show();
+
+							},
 							orientation : 'r',
 							cuboidsRandom : true
 						} ),
@@ -116,30 +124,16 @@
 						initEvents = function() {
 
 							// add navigation events
-							$( '#navNext' ).on( 'click', function() {
+							$navArrows.children( ':first' ).on( 'click', function() {
 
 								slicebox.next();
 								return false;
 
 							} );
 
-							$( '#navPrev' ).on( 'click', function() {
+							$navArrows.children( ':last' ).on( 'click', function() {
 								
 								slicebox.previous();
-								return false;
-
-							} );
-
-							$( '#navPlay' ).on( 'click', function() {
-								
-								slicebox.play();
-								return false;
-
-							} );
-
-							$( '#navPause' ).on( 'click', function() {
-								
-								slicebox.pause();
 								return false;
 
 							} );

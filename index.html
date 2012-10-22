@@ -84,11 +84,11 @@
 					</li>
 				</ul>
 
-				<div class="shadow"></div>
+				<div id="shadow" class="shadow"></div>
 
-				<div class="nav-arrows">
-					<a href="#" id="navNext">Next</a>
-					<a href="#" id="navPrev">Previous</a>
+				<div id="nav-arrows" class="nav-arrows">
+					<a href="#">Next</a>
+					<a href="#">Previous</a>
 				</div>
 
 				<div id="nav-dots" class="nav-dots">
@@ -110,11 +110,21 @@
 		<script type="text/javascript" src="js/jquery.slicebox.js"></script>
 		<script type="text/javascript">
 			$(function() {
-				
+
 				var Page = (function() {
 
-					var $nav = $( '#nav-dots > span' ),
+					var $navArrows = $( '#nav-arrows' ).hide(),
+						$navDots = $( '#nav-dots' ).hide(),
+						$nav = $navDots.children( 'span' ),
+						$shadow = $( '#shadow' ).hide(),
 						slicebox = $( '#sb-slider' ).slicebox( {
+							onReady : function() {
+
+								$navArrows.show();
+								$navDots.show();
+								$shadow.show();
+
+							},
 							onBeforeChange : function( pos ) {
 
 								$nav.removeClass( 'nav-dot-current' );
@@ -131,14 +141,14 @@
 						initEvents = function() {
 
 							// add navigation events
-							$( '#navNext' ).on( 'click', function() {
+							$navArrows.children( ':first' ).on( 'click', function() {
 
 								slicebox.next();
 								return false;
 
 							} );
 
-							$( '#navPrev' ).on( 'click', function() {
+							$navArrows.children( ':last' ).on( 'click', function() {
 								
 								slicebox.previous();
 								return false;

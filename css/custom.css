@@ -6,6 +6,7 @@
 	background: transparent url(../images/shadow.png) no-repeat bottom center;
 	background-size: 100% 100%; /* stretches it */
 	z-index: -1;
+	display: none;
 }
 
 .sb-description h3 {
@@ -16,6 +17,10 @@
 .sb-description h3 a {
 	color: #4a3c27;
 	text-shadow: 0 1px 1px rgba(255,255,255,0.5);
+}
+
+.nav-arrows {
+	display: none;
 }
 
 .nav-arrows a {
@@ -50,6 +55,7 @@
 	height: 30px;
 	width: 100%;
 	left: 0;
+	display: none;
 }
 
 .nav-dots span {
@@ -79,6 +85,7 @@
 	position: absolute;
 	right: 70px;
 	bottom: 0px;
+	display: none;
 }
 
 .nav-options span {

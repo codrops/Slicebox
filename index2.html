@@ -84,14 +84,14 @@
 					</li>
 				</ul>
 
-				<div class="shadow"></div>
+				<div id="shadow" class="shadow"></div>
 
-				<div class="nav-arrows">
-					<a href="#" id="navNext">Next</a>
-					<a href="#" id="navPrev">Previous</a>
+				<div id="nav-arrows" class="nav-arrows">
+					<a href="#">Next</a>
+					<a href="#">Previous</a>
 				</div>
 
-				<div class="nav-options">
+				<div id="nav-options" class="nav-options">
 					<span id="navPlay">Play</span>
 					<span id="navPause">Pause</span>
 				</div>
@@ -108,7 +108,17 @@
 				
 				var Page = (function() {
 
-					var slicebox = $( '#sb-slider' ).slicebox( {
+					var $navArrows = $( '#nav-arrows' ).hide(),
+						$navOptions = $( '#nav-options' ).hide(),
+						$shadow = $( '#shadow' ).hide(),
+						slicebox = $( '#sb-slider' ).slicebox( {
+							onReady : function() {
+
+								$navArrows.show();
+								$navOptions.show();
+								$shadow.show();
+
+							},
 							orientation : 'h',
 							cuboidsCount : 3
 						} ),
@@ -121,14 +131,14 @@
 						initEvents = function() {
 
 							// add navigation events
-							$( '#navNext' ).on( 'click', function() {
+							$navArrows.children( ':first' ).on( 'click', function() {
 
 								slicebox.next();
 								return false;
 
 							} );
 
-							$( '#navPrev' ).on( 'click', function() {
+							$navArrows.children( ':last' ).on( 'click', function() {
 								
 								slicebox.previous();
 								return false;
