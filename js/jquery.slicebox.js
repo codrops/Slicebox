@@ -222,7 +222,9 @@
 		// callbacks
 		onBeforeChange : function( position ) { return false; },
 		onAfterChange : function( position ) { return false; },
-		onReady : function() { return false; }
+		onReady : function() { return false; },
+		//reverse direction of rotation
+		reverse : false,
 	};
 
 	$.Slicebox.prototype = {
@@ -693,11 +695,14 @@
 				'transition' : 'transform ' + this.config.speed + 'ms ' + this.config.easing
 			}, positionStyle, this.size );
 
+			var rotationDirection = this.config.reverse ? '' : '-'; //default negative
+			var oppositeRotationDirection = this.config.reverse ? '-' : ''; //default positive
+
 			this.animationStyles = {
 				side1 : ( this.config.o === 'v' ) ? { 'transform' : 'translate3d( 0, 0, -' + ( this.size.height / 2 ) + 'px )' } : { 'transform' : 'translate3d( 0, 0, -' + ( this.size.width / 2 ) + 'px )' },
-				side2 : ( this.config.o === 'v' ) ? { 'transform' : 'translate3d( 0, 0, -' + ( this.size.height / 2 ) + 'px ) rotate3d( 1, 0, 0, -90deg )' } : { 'transform' : 'translate3d( 0, 0, -' + ( this.size.width / 2 ) + 'px ) rotate3d( 0, 1, 0, -90deg )' },
-				side3 : ( this.config.o === 'v' ) ? { 'transform' : 'translate3d( 0, 0, -' + ( this.size.height / 2 ) + 'px ) rotate3d( 1, 0, 0, -180deg )' } : { 'transform' : 'translate3d( 0, 0, -' + ( this.size.width / 2 ) + 'px ) rotate3d( 0, 1, 0, -180deg )' },
-				side4 : ( this.config.o === 'v' ) ? { 'transform' : 'translate3d( 0, 0, -' + ( this.size.height / 2 ) + 'px ) rotate3d( 1, 0, 0, -270deg )' } : { 'transform' : 'translate3d( 0, 0, -' + ( this.size.width / 2 ) + 'px ) rotate3d( 0, 1, 0, -270deg )' }
+				side2 : ( this.config.o === 'v' ) ? { 'transform' : 'translate3d( 0, 0, -' + ( this.size.height / 2 ) + 'px ) rotate3d( 1, 0, 0, ' + rotationDirection + '90deg )' } : { 'transform' : 'translate3d( 0, 0, -' + ( this.size.width / 2 ) + 'px ) rotate3d( 0, 1, 0, ' + rotationDirection + '90deg )' },
+				side3 : ( this.config.o === 'v' ) ? { 'transform' : 'translate3d( 0, 0, -' + ( this.size.height / 2 ) + 'px ) rotate3d( 1, 0, 0, ' + rotationDirection + '180deg )' } : { 'transform' : 'translate3d( 0, 0, -' + ( this.size.width / 2 ) + 'px ) rotate3d( 0, 1, 0, ' + rotationDirection + '180deg )' },
+				side4 : ( this.config.o === 'v' ) ? { 'transform' : 'translate3d( 0, 0, -' + ( this.size.height / 2 ) + 'px ) rotate3d( 1, 0, 0, ' + rotationDirection + '270deg )' } : { 'transform' : 'translate3d( 0, 0, -' + ( this.size.width / 2 ) + 'px ) rotate3d( 0, 1, 0, ' + rotationDirection + '270deg )' }
 			};
 
 			var measure = ( this.config.o === 'v' ) ? this.size.height : this.size.width;
@@ -713,35 +718,35 @@
 					width : this.size.width,
 					height : this.size.height,
 					backgroundColor : this.config.colorHiddenSides,
-					transform : 'rotate3d( 0, 1, 0, 180deg ) translate3d( 0, 0, ' + ( measure / 2 ) + 'px ) rotateZ( 180deg )'
+					transform : 'rotate3d( 0, 1, 0, ' + oppositeRotationDirection + '180deg ) translate3d( 0, 0, ' + ( measure / 2 ) + 'px ) rotateZ( ' + oppositeRotationDirection + '180deg )'
 				},
 				rightSideStyle : {
 					width : measure,
 					height : ( this.config.o === 'v' ) ? this.size.height : this.size.height + this.extra,
 					left : ( this.config.o === 'v' ) ? this.size.width / 2 - this.size.height / 2 : 0,
 					backgroundColor : this.config.colorHiddenSides,
-					transform : 'rotate3d( 0, 1, 0, 90deg ) translate3d( 0, 0, ' + ( this.size.width / 2 ) + 'px )'
+					transform : 'rotate3d( 0, 1, 0, ' + oppositeRotationDirection + '90deg ) translate3d( 0, 0, ' + ( this.size.width / 2 ) + 'px )'
 				},
 				leftSideStyle : {
 					width : measure,
 					height : ( this.config.o === 'v' ) ? this.size.height : this.size.height + this.extra,
 					left : ( this.config.o === 'v' ) ? this.size.width / 2 - this.size.height / 2  : 0,
 					backgroundColor : this.config.colorHiddenSides,
-					transform : 'rotate3d( 0, 1, 0, -90deg ) translate3d( 0, 0, ' + ( this.size.width / 2 ) + 'px )'
+					transform : 'rotate3d( 0, 1, 0, ' + rotationDirection + '90deg ) translate3d( 0, 0, ' + ( this.size.width / 2 ) + 'px )'
 				},
 				topSideStyle : {
 					width : ( this.config.o === 'v' ) ? this.size.width + this.extra : this.size.width,
 					height : measure,
 					top : ( this.config.o === 'v' ) ? 0 : this.size.height / 2 - this.size.width / 2,
 					backgroundColor : this.config.colorHiddenSides,
-					transform : 'rotate3d( 1, 0, 0, 90deg ) translate3d( 0, 0, ' + ( this.size.height / 2 ) + 'px )'
+					transform : 'rotate3d( 1, 0, 0, ' + oppositeRotationDirection + '90deg ) translate3d( 0, 0, ' + ( this.size.height / 2 ) + 'px )'
 				},
 				bottomSideStyle : {
 					width : ( this.config.o === 'v' ) ? this.size.width + this.extra : this.size.width,
 					height : measure,
 					top : ( this.config.o === 'v' ) ? 0 : this.size.height / 2 - this.size.width / 2,
 					backgroundColor : this.config.colorHiddenSides,
-					transform : 'rotate3d( 1, 0, 0, -90deg ) translate3d( 0, 0, ' + ( this.size.height / 2 ) + 'px )'
+					transform : 'rotate3d( 1, 0, 0, ' + rotationDirection + '90deg ) translate3d( 0, 0, ' + ( this.size.height / 2 ) + 'px )'
 				}
 			};
 
